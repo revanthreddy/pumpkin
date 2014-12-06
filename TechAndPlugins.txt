@@ -18,5 +18,16 @@ Fontawesome
 Semantic
 SweetAlert
 Bootstrap
+
 Material Design
+https://github.com/angular/material#demos
+https://github.com/angular/bower-material/blob/master/README.md
+
 Animate.css
+http://daneden.github.io/animate.css/
+
+Angularjs-DragAndDrop
+https://github.com/Ciul/Angular-DragAndDrop
+
+Angular-Randomize
+https://github.com/Aleksey-Danchin/angular-randomize

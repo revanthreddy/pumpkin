@@ -24,4 +24,99 @@
         <h4>Karma</h4>
         <p>Spectacular Test Runner for JavaScript.</p>
     </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="page-header text-center">
+            <h3>
+              <span>{{main.name}}</span>
+              <small>
+                <a href="http://facebook.com/luiscarlosjayk">by Ciul</a>
+              </small>
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-10 col-lg-offset-1 well">
+          <p>Here are a list of persons and a list of animals, while persons can be dropped in any droppable element, animals can be dropped in all droppables <strong>but</strong> the droppable4 because the drop-on property of animals are '['droppable2', 123]' and that's why it never gets green with animals.</p>
+          <p>If a droppable doesn't have any id, it can receive any draggable object, like the droppable 1.</p>
+          <p><strong>Watch this DEMO better on fullscreen.</strong></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div>
+            Status: {{main.status}}
+          </div>
+          <div class="list-group">
+            <div class="list-group-item" ng-repeat="person in main.persons"
+              draggable="person" on-drag-start="main.onDragStart">
+              <span class="badge">{{person.job}}</span>
+              <span>{{person.name}}</span>
+            </div>
+          </div>
+          
+          <div class="list-group">
+            <div class="list-group-item" ng-repeat="animal in main.animals"
+              draggable="animal" on-drag-start="main.onDragStart" drop-on="['droppable2', 123]">
+              <span class="badge">{{animal.type}}</span>
+              <span>{{animal.name}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3">
+          <p droppable on-drop="main.onDrop" on-drag-enter="main.onDragEnter" data-on-drag-leave="main.onDragLeave">
+            Droppable 1
+            <br/>I don't have a drop id, anyone can drop on me
+          </p>
+        </div>
+        <div class="col-lg-3">
+          <p droppable on-drop="main.onDrop" on-drag-enter="main.onDragEnter" on-drag-leave="main.onDragLeave" drop-id="droppable2">
+            Droppable 2
+            <br/> I have a drop id = 'droppable2'
+          </p>
+        </div>
+        <div class="col-lg-3">
+          <p droppable on-drop="main.onDrop" on-drag-enter="main.onDragEnter" on-drag-leave="main.onDragLeave" drop-id="123">
+            Droppable 3
+            <br/> I have a drop id = 123
+          </p>
+        </div>
+        <div class="col-lg-3">
+          <p droppable on-drop="main.onDrop" on-drag-enter="main.onDragEnter" on-drag-leave="main.onDragLeave" drop-id="droppable4">
+            Droppable 4
+            <br/> I have a drop id = 'droppable4'
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          {{main.dropped | json}}
+        </div>
+      </div>
+    </div>
+
+<md-content>
+    <md-list>
+      <md-item ng-repeat="item in todos">
+        <md-item-content>
+          <div class="md-tile-left">
+              <img ng-src="{{item.face}}" class="face" alt="{{item.who}}">
+          </div>
+          <div class="md-tile-content">
+            <h3>{{item.what}}</h3>
+            <h4>{{item.who}}</h4>
+            <p>
+              {{item.notes}}
+            </p>
+          </div>
+        </md-item-content>
+      </md-item>
+    </md-list>
+  </md-content>
+    
 </div>
