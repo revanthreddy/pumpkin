@@ -19,4 +19,4 @@ Semantic
 SweetAlert
 Bootstrap
 Material Design
-
+Animate.css
