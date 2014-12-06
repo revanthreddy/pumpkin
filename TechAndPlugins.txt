@@ -1,0 +1,22 @@
+Technologies:
+------------------------
+AngularJS
+NodeJS
+Pubnub
+Yeoman: Grunt, Bower, Yo
+Sprint.ly
+Datadog
+Count.ly
+Ruby
+Sass
+
+
+
+Plugins:
+------------------------
+Fontawesome
+Semantic
+SweetAlert
+Bootstrap
+Material Design
+
