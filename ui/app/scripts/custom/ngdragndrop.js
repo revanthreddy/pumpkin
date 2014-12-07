@@ -49,7 +49,7 @@ var dragndrop = angular.module('DragAndDrop', [])
           
           // DragStart
           element.bind('dragstart', function(ev) {
-            var originalEv = jQuery ? ev.originalEvent : ev;
+            var originalEv = $ ? ev.originalEvent : ev;
             
             if (!!dragImage) {
               // This requires an image element to be created
@@ -140,6 +140,7 @@ var dragndrop = angular.module('DragAndDrop', [])
           
           // Drop
           element.bind('drop', function(ev) {
+            console.log('you dropped something...');
             ev.stopPropagation(); // Stop some browsers from redirecting
             ev.preventDefault();
             var originalEv  = $ ? ev.originalEvent : ev,

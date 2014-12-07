@@ -10,7 +10,7 @@
  */
 
  var app = angular
-  .module('pumpkinApp', [ 'DragAndDrop' ]);
+  .module('pumpkinApp', [ 'DragAndDrop', 'ngMaterial', 'timer' ]);
 
 app.config( function() {
 

@@ -20,8 +20,13 @@ SweetAlert
 Bootstrap
 
 Material Design
+https://material.angularjs.org/#/
 https://github.com/angular/material#demos
 https://github.com/angular/bower-material/blob/master/README.md
+https://github.com/FezVrasta/bootstrap-material-design
+
+Material Design Icons
+https://github.com/google/material-design-icons
 
 Animate.css
 http://daneden.github.io/animate.css/
@@ -31,3 +36,7 @@ https://github.com/Ciul/Angular-DragAndDrop
 
 Angular-Randomize
 https://github.com/Aleksey-Danchin/angular-randomize
+
+Angular Timer
+http://siddii.github.io/angular-timer/
+
