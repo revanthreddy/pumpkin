@@ -11,18 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141207100422) do
+ActiveRecord::Schema.define(version: 20141207230722) do
 
   create_table "games", force: true do |t|
     t.integer  "quiz_id"
     t.integer  "num_players"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "games_quizzes", id: false, force: true do |t|
-    t.integer "game_id"
-    t.integer "quiz_id"
   end
 
   create_table "identities", force: true do |t|
