@@ -45,5 +45,8 @@ gem 'omniauth-facebook'
 
 gem 'pry-debugger'
 
+gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
+gem 'bootstrap-material-design'
 
 
