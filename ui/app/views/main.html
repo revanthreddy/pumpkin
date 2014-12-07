@@ -30,36 +30,16 @@
                             </h3>
                         </md-toolbar>
                         <br>
-                        <div class="col-lg-3">
+                        <div class="col-lg-3" ng-repeat="question in questions" >
                             <p data-droppable data-on-drop="main.onDrop" data-on-drag-enter="main.onDragEnter" data-on-drag-leave="main.onDragLeave">
-                                Droppable 1
-                                <br/>I don't have a drop id, anyone can drop on me
+                               
+                                
+                                <img src="{{question.image.url}}" style="border:5px solid black" width="100" height="100">
+                                <br/>
+                                 {{question.term}}
                             </p>
                         </div>
-                        <div class="col-lg-3">
-                            <p data-droppable data-on-drop="main.onDrop" data-on-drag-enter="main.onDragEnter" data-on-drag-leave="main.onDragLeave" data-drop-id="droppable2">
-                                Droppable 2
-                                <br/> I have a drop id = 'droppable2'
-                            </p>
-                        </div>
-                        <div class="col-lg-3">
-                            <p data-droppable data-on-drop="main.onDrop" data-on-drag-enter="main.onDragEnter" data-on-drag-leave="main.onDragLeave" data-drop-id="123">
-                                Droppable 3
-                                <br/> I have a drop id = 123
-                            </p>
-                        </div>
-                        <div class="col-lg-3">
-                            <p data-droppable data-on-drop="main.onDrop" data-on-drag-enter="main.onDragEnter" data-on-drag-leave="main.onDragLeave" data-drop-id="droppable4">
-                                Droppable 4
-                                <br/> I have a drop id = 'droppable4'
-                            </p>
-                        </div>
-                        <div class="col-lg-3">
-                            <p data-droppable data-on-drop="main.onDrop" data-on-drag-enter="main.onDragEnter" data-on-drag-leave="main.onDragLeave" data-drop-id="droppable4">
-                                Droppable 4
-                                <br/> I have a drop id = 'droppable4'
-                            </p>
-                        </div>
+
 
                     </div>
                     <div class="col-lg-3">
@@ -70,33 +50,9 @@
                         </md-toolbar>
                         <md-content>
                             <md-list>
-                                <md-item>
+                                <md-item ng-repeat="question in questions">
                                     <md-item-content>
-                                        <div class="md-tile-content" draggable="true" data-draggable="person">1</div>
-                                    </md-item-content>
-                                    <md-divider ng-if="!$last"></md-divider>
-                                </md-item>
-                                <md-item>
-                                    <md-item-content>
-                                        <div class="md-tile-content" draggable="true" data-draggable="person">2</div>
-                                    </md-item-content>
-                                    <md-divider ng-if="!$last"></md-divider>
-                                </md-item>
-                                <md-item>
-                                    <md-item-content>
-                                        <div class="md-tile-content" draggable="true" data-draggable="person">3</div>
-                                    </md-item-content>
-                                    <md-divider ng-if="!$last"></md-divider>
-                                </md-item>
-                                <md-item>
-                                    <md-item-content>
-                                        <div class="md-tile-content" draggable="true" data-draggable="person">4</div>
-                                    </md-item-content>
-                                    <md-divider ng-if="!$last"></md-divider>
-                                </md-item>
-                                <md-item>
-                                    <md-item-content>
-                                        <div class="md-tile-content" draggable="true" data-draggable="person">5</div>
+                                        <div class="md-tile-content" draggable="true" data-draggable="person">{{question.definition}}</div>
                                     </md-item-content>
                                     <md-divider ng-if="!$last"></md-divider>
                                 </md-item>
