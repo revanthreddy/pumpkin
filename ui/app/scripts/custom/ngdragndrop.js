@@ -15,7 +15,7 @@ var dragndrop = angular.module('DragAndDrop', [])
    * Draggable
    */
   .directive('draggable', [
-    '$parse',
+    '$parse', 
     function($parse) {
       return {
         restrict: 'A',
@@ -140,6 +140,10 @@ var dragndrop = angular.module('DragAndDrop', [])
           
           // Drop
           element.bind('drop', function(ev) {
+            // CALL To see if correct first
+            // IF correct, delete
+            // IF incorrect, show red  then change the UI...
+            //console.log($scope.questions);
             console.log('you dropped something...');
             ev.stopPropagation(); // Stop some browsers from redirecting
             ev.preventDefault();
@@ -164,7 +168,7 @@ var dragndrop = angular.module('DragAndDrop', [])
             else
               data = angular.fromJson(originalEv.dataTransfer.getData('text/html'));
             
-            // uset onDrop defined function
+            // user onDrop defined function
             if (angular.isFunction(userOnDrop))
               userOnDrop(data, ev);
             
