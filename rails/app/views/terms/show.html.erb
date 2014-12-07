@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Quiz:</strong>
+  <%= @term.quiz_id %>
+</p>
+
+<p>
+  <strong>Term:</strong>
+  <%= @term.term %>
+</p>
+
+<p>
+  <strong>Definition:</strong>
+  <%= @term.definition %>
+</p>
+
+<p>
+  <strong>Img url:</strong>
+  <%= @term.img_url %>
+</p>
+
+<p>
+  <strong>Img width:</strong>
+  <%= @term.img_width %>
+</p>
+
+<p>
+  <strong>Img height:</strong>
+  <%= @term.img_height %>
+</p>
+
+<p>
+  <strong>Rank:</strong>
+  <%= @term.rank %>
+</p>
+
+<%= link_to 'Edit', edit_term_path(@term) %> |
+<%= link_to 'Back', terms_path %>
