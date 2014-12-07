@@ -8,15 +8,28 @@
   var socket = io.connect('http://localhost:3000');
   
   socket.on('server' , function(data){
-      alert(data);
       $("#data").append(data +"<br>");
        socket.emit('games_started', {} );
   });
   
+  socket.on('server-response' , function(data){
+      alert(data.game_id);
+  });
+  
+  
+  
+  function clicker(){
+      socket.emit('init', {
+    "game_id": 12345 ,
+    "player_id" :  1 ,
+    "term_id" : 2005281693 ,
+    "definition"  : "Monkey"
+} );
+  }
  
 </script>
 <h1>sockets activity</h1>
-
+<button onclick="clicker();">click here</button>
 <div id="data">
     
 </div>

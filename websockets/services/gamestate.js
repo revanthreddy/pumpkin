@@ -3,9 +3,14 @@ var Promise = require('promise');
 
 
 
+exports.testingFunction = function(data,socket){
+    socket.emit("server-response",data);
+};
+
+
 //new game state
 exports.newGameState = function (game) {
-    
+    try{
     if(!game)
         return;
     game._id = game.game_id;
@@ -17,18 +22,22 @@ exports.newGameState = function (game) {
         }
         var collection = db.collection('games');
 
-        collection.save(game, function (err, records) {
+        collection.insert(game, function (err, record) {
             if (err) {
                 console.log(err);
                 reject(err);
             }
             console.log(record);
-            resolve(records[0]);
+            resolve(record);
 
         });
     });
 
     return promise;
+    }catch(ex){
+        console.log(ex);
+        return null;
+    }
 };
 
 
