@@ -1,6 +1,11 @@
 #devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
 class User < ActiveRecord::Base
+  has_many :scores, foreign_key: :player_id
+  has_many :games, through: :scores
+  has_many :quizzes, foreign_key: :owner_id
+
+
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
 
