@@ -142,7 +142,7 @@ var dragndrop = angular.module('DragAndDrop', [])
           element.bind('drop', function(ev) {
             ev.stopPropagation(); // Stop some browsers from redirecting
             ev.preventDefault();
-            var originalEv  = jQuery ? ev.originalEvent : ev,
+            var originalEv  = $ ? ev.originalEvent : ev,
                 canDropHere = true; // Flag to verify if this element can be dropped here
             
             // Verify this element can be dropped here

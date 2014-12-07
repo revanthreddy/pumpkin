@@ -8,5 +8,14 @@
  *
  * Main module of the application.
  */
-angular
-  .module('pumpkinApp', []);
+
+ var app = angular
+  .module('pumpkinApp', [ 'DragAndDrop' ]);
+
+app.config( function() {
+
+});
+
+app.run(['$rootScope', '$location', '$http', function($rootScope, $location, $http) {
+$.material.init();
+}]);

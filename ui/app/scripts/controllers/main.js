@@ -7,8 +7,7 @@
  * # MainCtrl
  * Controller of the pumpkinApp
  */
-angular.module('pumpkinApp', ['ngMaterial', 'DragAndDrop'])
-    .controller('MainCtrl', [
+app.controller('MainCtrl', [
         '$scope',
         function($scope) {
             $scope.awesomeThings = [
