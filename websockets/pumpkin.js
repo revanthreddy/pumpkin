@@ -34,6 +34,12 @@ io.sockets.on('connection', function (socket) {
     
 });
 
+app.post('/games', function (req, res) {
+    gamestate.gameMove(req.body);
+    return res.status(200).send("done");
+});
+
+
 
 
 
