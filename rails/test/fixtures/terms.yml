@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  quiz_id: 1
+  term: MyText
+  definition: MyText
+  img_url: MyString
+  img_width: 1
+  img_height: 1
+  rank: 1
+
+two:
+  quiz_id: 1
+  term: MyText
+  definition: MyText
+  img_url: MyString
+  img_width: 1
+  img_height: 1
+  rank: 1

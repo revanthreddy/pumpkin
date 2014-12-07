@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141206205924) do
+ActiveRecord::Schema.define(version: 20141207100422) do
+
+  create_table "games", force: true do |t|
+    t.integer  "quiz_id"
+    t.integer  "num_players"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "games_quizzes", id: false, force: true do |t|
+    t.integer "game_id"
+    t.integer "quiz_id"
+  end
 
   create_table "identities", force: true do |t|
     t.integer  "user_id"
@@ -22,6 +34,35 @@ ActiveRecord::Schema.define(version: 20141206205924) do
   end
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id"
+
+  create_table "quizzes", force: true do |t|
+    t.integer  "owner_id"
+    t.integer  "qid"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "scores", force: true do |t|
+    t.integer  "player_id"
+    t.integer  "game_id"
+    t.integer  "quiz_id"
+    t.integer  "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "terms", force: true do |t|
+    t.integer  "quiz_id"
+    t.text     "term"
+    t.text     "definition"
+    t.string   "img_url"
+    t.integer  "img_width"
+    t.integer  "img_height"
+    t.integer  "rank"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
