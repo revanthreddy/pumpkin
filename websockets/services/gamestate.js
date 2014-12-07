@@ -56,7 +56,7 @@ exports.getCurrentGameState = function (gameId) {
     return promise;
 };
 
-exports.doesTheCurrentGameStateHasTheQuestion = function (gameId, term_id) {
+function doesTheCurrentGameStateHasTheQuestion(gameId, term_id) {
 
     var promise = new Promise(function (resolve, reject) {
         var db = dbConnection.getDbConnection();
@@ -71,8 +71,11 @@ exports.doesTheCurrentGameStateHasTheQuestion = function (gameId, term_id) {
                 console.log(err);
                 reject(err);
             }
-            console.log(record);
-            resolve(record);
+            console.log("record : "+record);
+            if(!record)
+                reject(null);
+            else
+                resolve(record);
 
         });
     });
@@ -85,7 +88,7 @@ exports.doesTheCurrentGameStateHasTheQuestion = function (gameId, term_id) {
 
 exports.gameMove = function (playerAnswer , io) {
 
-    var gameState = gamestate.doesTheCurrentGameStateHasTheQuestion(playerAnswer.game_id, playerAnswer.term_id);
+    var gameState = doesTheCurrentGameStateHasTheQuestion(playerAnswer.game_id, playerAnswer.term_id);
     var gameResponse = new Object();
     gameState.then(function (currentGameState) {
         if (currentGameState) {
@@ -93,14 +96,16 @@ exports.gameMove = function (playerAnswer , io) {
             for (var i in terms) {
                 if (terms[i].id === playerAnswer.term_id) {
                     if (terms[i].definition === playerAnswer.definition) {  //correct answer
-                        
-                        terms.splice(index, 1);
+                        console.log("correct answer");
+                        terms.splice(i, 1);
+                        console.log(terms);
                         var players = currentGameState.players;
                         for(var j in players){
                             if(players[j].id === playerAnswer.player_id){
                                 if(!players[j].score)
                                     players[j].score = 0;
                                 players[j].score = 1+ players[j].score ;
+                                var score = players[j].score;
                                 var db = dbConnection.getDbConnection();
                                 if (!db) {
                                     console.error("Failed to initialize the db.");
@@ -115,7 +120,10 @@ exports.gameMove = function (playerAnswer , io) {
                                     gameResponse.game_id = playerAnswer.game_id;
                                     gameResponse.term_id = playerAnswer.term_id;
                                     gameResponse.answeredCorrectly = true;
-                                    gameResponse.player = {"id" :players[j].id , "score" : players[j].score } ;
+                                    gameResponse.player = {"id" :playerAnswer.player_id , "score" : score } ;
+                                    /*
+                                     * 
+                                     **/
                                     console.log(gameResponse);
                                 }
                                 else
@@ -131,6 +139,8 @@ exports.gameMove = function (playerAnswer , io) {
                                 if(!players[j].score)
                                     players[j].score = 0;
                                 players[j].score =  players[j].score -1 ;
+                                var score = players[j].score;
+//                                console.log (players[j].score);
                                 var db = dbConnection.getDbConnection();
                                 if (!db) {
                                     console.error("Failed to initialize the db.");
@@ -146,8 +156,11 @@ exports.gameMove = function (playerAnswer , io) {
                                     gameResponse.game_id = playerAnswer.game_id;
                                     gameResponse.term_id = playerAnswer.term_id;
                                     gameResponse.answeredCorrectly = false;
-                                    gameResponse.player = {"id" :players[j].id , "score" : players[j].score } ;
+                                    gameResponse.player = {"id" : playerAnswer.player_id , "score" : score } ;
                                     gameResponse.alreadyAnswered = false;
+                                    /*
+                                     * 
+                                     **/
                                     console.log(gameResponse);
                                 }
                                 else
@@ -163,8 +176,10 @@ exports.gameMove = function (playerAnswer , io) {
 
     }, function (error) {
         console.log(error);
-        console.log("question already answered");
-        return null;
+        var gameResponse = new Object();
+        gameResponse.alreadyAnswered = true;
+        console.log(gameResponse);
+        //return null;
     });
 
 
