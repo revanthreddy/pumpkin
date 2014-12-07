@@ -42,7 +42,6 @@ exports.newGameState = function (game) {
 
 
 exports.getCurrentGameState = function (gameId) {
-
     var promise = new Promise(function (resolve, reject) {
         var db = dbConnection.getDbConnection();
         if (!db) {
@@ -50,13 +49,12 @@ exports.getCurrentGameState = function (gameId) {
             reject("Failed to initialize the db.");
         }
         var collection = db.collection('games');
-
-        collection.findOne({"_id": gameId}, function (err, record) {
+        collection.findOne({"_id": parseInt(gameId)}, function (err, record) {
             if (err) {
                 console.log(err);
                 reject(err);
             }
-            console.log(record);
+            console.log("record : "+record);
             resolve(record);
 
         });
@@ -92,7 +90,52 @@ function doesTheCurrentGameStateHasTheQuestion(gameId, term_id) {
     return promise;
 };
 
+function isTheGameFinished(gameId){
+    var promise = new Promise(function (resolve, reject) {
+        var db = dbConnection.getDbConnection();
+        if (!db) {
+            console.error("Failed to initialize the db.");
+            reject("Failed to initialize the db.");
+        }
+        var collection = db.collection('games');
+        collection.findOne({"_id": parseInt(gameId)}, function (err, record) {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+            if(!record)
+                reject("game already finished and deleted");
+            resolve(record);
 
+        });
+    });
+
+    return promise;
+}
+
+
+function deleteGame(gameId){
+    var promise = new Promise(function (resolve, reject) {
+        var db = dbConnection.getDbConnection();
+        if (!db) {
+            console.error("Failed to initialize the db.");
+            reject("Failed to initialize the db.");
+        }
+        var collection = db.collection('games');
+        collection.remove({"_id": parseInt(gameId)}, function (err, numberOfRemovedDocs) {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+            if(numberOfRemovedDocs === 0)
+                reject(0);
+            resolve(numberOfRemovedDocs);
+
+        });
+    });
+
+    return promise;
+}
 
 
 exports.gameMove = function (playerAnswer , io) {
@@ -107,6 +150,7 @@ exports.gameMove = function (playerAnswer , io) {
                     if (terms[i].definition === playerAnswer.definition) {  //correct answer
                         console.log("correct answer");
                         terms.splice(i, 1);
+                        
                         console.log(terms);
                         var players = currentGameState.players;
                         for(var j in players){
@@ -133,7 +177,12 @@ exports.gameMove = function (playerAnswer , io) {
                                     /*
                                      * 
                                      **/
+                                    
                                     console.log(gameResponse);
+                                    if(terms.size === 0 ){
+                                        console.log("game finished");
+                                        io.sockets.emit(playerAnswer.game_id+"-complete", true);
+                                    }
                                 }
                                 else
                                 {}
