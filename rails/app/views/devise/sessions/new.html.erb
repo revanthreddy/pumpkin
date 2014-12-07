@@ -1,31 +1,51 @@
+<div class="jumbotron">
+    <h1>Pumpkin Online</h1>
+    <p>Welcome to Pumpkin Online! The competitive learning platform that pits you and your peers against each other in a fight to the end. Everyone is a winner; knowledge is your prize (and also first place in your class).</p>
+    <!-- <p><a class="btn btn-primary btn-lg">Learn more</a></p> -->
+</div>
 
+<div class="row">
+<div class="col-lg-6">
+</div>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-horizontal'}) do |f| %>
-  <fieldset>
-    <legend> Log in </legend>
-    <div class="field">
-      <%= f.label :email, html: {class: "control-label"} %><br />
-      <%= f.email_field :email, autofocus: true, html: {class: "form-control"}  %>
-    </div>
-
-    <div class="field">
-      <%= f.label :password, html: {class: "control-label"}  %><br />
-      <%= f.password_field :password, autocomplete: "off", html: {class: "form-control"} %>
-    </div>
-
-    <% if devise_mapping.rememberable? -%>
-      <div class="field">
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
+<div class="col-lg-6">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-horizontal'}) do |f| %>
+    <fieldset>
+      <legend> Log in </legend>
+      <div class="form-group field">
+        <%= f.label :email, class: "col-lg-2 control-label" %><br />
+        <div class="col-lg-10">
+          <%= f.email_field :email, autofocus: true, class: "form-control" %>
+        </div>
       </div>
-    <% end -%>
 
-    <div class="actions">
-      <%= f.submit "Log in" %>
-    </div>
+       <div class="form-group">
+        <%= f.label :password, class: "col-lg-2 control-label" %><br />
+        <div class="col-lg-10">
+          <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+          <% if devise_mapping.rememberable? -%>
+            <div class="checkbox">
+              <label>
+                <%= f.check_box :remember_me %> Remember me
+              </label>
+            </div>
+          <% end -%>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <%= f.submit "Login", class: "btn btn-primary"  %>
+          <%= link_to "Login with Facebook", user_omniauth_authorize_path(provider: :facebook), class: "btn btn-default" %>
+          <%= link_to "Register", new_user_registration_path, class: "btn btn-default" %>
+        </div>
+      </div>
+    
+    </fieldset>
+  <% end %>
   
-  </fieldset>
-<% end %>
+</div>
 
-<%= render "devise/shared/links" %>
+</div>
+
 
