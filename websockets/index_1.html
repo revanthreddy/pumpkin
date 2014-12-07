@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>Getting Started With PubNub</title>
+  </head>
+  <body>
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+    <script charset="utf-8">
+      (function(){
+    
+        var PUBNUB_demo = PUBNUB.init({
+          publish_key: 'pub-c-36c7caed-38c0-4cfc-b283-1e63c8169d1f',
+    subscribe_key: 'sub-c-796bc1de-7e48-11e4-baaa-02ee2ddab7fe'
+        });
+        
+        
+          
+        PUBNUB_demo.subscribe({
+          channel: 'from_server',
+          callback: function(m){
+                        PUBNUB_demo.publish({
+               channel: 'my_response',        
+               message: 'Hello from the PubNub Javascript SDK'
+           });
+        }
+        });
+        
+        PUBNUB_demo.subscribe({
+          channel: 'from_server_again',
+          callback: function(m){alert("message from server "+m);}
+        });
+        
+        
+        
+        
+      })();
+
+    </script>
+  </body>
+</html>
