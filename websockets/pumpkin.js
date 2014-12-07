@@ -29,14 +29,27 @@ io.sockets.on('connection', function (socket) {
     socket.emit('server', {"key" : 1});
     
     socket.on('init', function (data) {
-        
+        gamestate.testingFunction(data,socket);
     });
-    
+   
 });
 
 app.post('/games', function (req, res) {
-    gamestate.gameMove(req.body);
-    return res.status(200).send("done");
+    var game = req.body;
+    if(!game)
+        return;
+    game._id = game.game_id;
+    var promise = gamestate.newGameState(game);
+    if(!promise)
+        return res.status(500).send("Internal server error");
+    promise.then(function (gameState) {
+        io.sockets.emit(game._id+"-init" , gameState);
+    } , function (error) {
+        console.log(error);
+        return res.status(400).send("Fail");
+    });
+    //gamestate.gameMove(req.body);
+    return res.status(200).send("Game state received");
 });
 
 
