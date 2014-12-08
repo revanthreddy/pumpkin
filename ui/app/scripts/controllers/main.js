@@ -20,7 +20,7 @@ app.controller('MainCtrl', [
         	$rootScope.firstTime = false;
             $timeout(function() {
                 alert('you finished!');
-            }, 1000);
+            }, 61000);
         }
 
         // GET GAME STATE FROM REVANTH
