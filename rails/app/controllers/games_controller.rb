@@ -1,7 +1,9 @@
+require 'net/http'
+
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :html, :json
 
   def index
     @games = Game.all
@@ -9,12 +11,19 @@ class GamesController < ApplicationController
   end
 
   def show
+    #check the number of players in the game
+    #if less than player_num then create score for this user else render failure
+    #if game now has enough players send message to node to start game
+    #may god be with you
+    
     respond_with(@game)
   end
 
   def new
-    @game = Game.new
-    respond_with(@game)
+    @game = Game.new(game_params)
+    
+    @game.save
+    redirect_to(@game)
   end
 
   def edit
