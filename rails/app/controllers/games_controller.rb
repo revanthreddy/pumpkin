@@ -16,7 +16,39 @@ class GamesController < ApplicationController
     #if game now has enough players send message to node to start game
     #may god be with you
     
-    respond_with(@game)
+    if @game.users.count < @game.num_players
+      Score.create({
+        user: current_user,
+        game: @game,
+        quiz: @game.quiz,
+        score: 0
+      })
+      
+      if @game.users.count == @game.num_players
+        begin
+          req = Net::HTTP::Post.new(Rails.application.config.node_endpoints["game_path"],
+                                        initheader = {'Content-Type' =>'application/json'})
+          req.body = render_to_string "show", formats:[:json]
+          res = Net::HTTP.new(Rails.application.config.node_endpoints["host"],
+                              Rails.application.config.node_endpoints["port"]).start { |http|
+                                http.request(req)
+                              }
+          puts "Response #{res.code} #{res.message}: #{res.body}"
+        rescue Exception => msg  
+          # display the system generated error message  
+          puts msg  
+        end
+          
+      end
+      
+    else
+      redirect_to root_path
+      return
+    end
+    
+    
+    respond_with(@game)    
+
   end
 
   def new
