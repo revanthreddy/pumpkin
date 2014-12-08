@@ -17,13 +17,35 @@ app.controller('MainCtrl', [
         ];
 
         if ($rootScope.firstTime == true) {
-        	$rootScope.firstTime = false;
+            $rootScope.firstTime = false;
             $timeout(function() {
                 alert('you finished!');
             }, 61000);
         }
 
+
         // GET GAME STATE FROM REVANTH
+        function pub() {
+            $rootScope.PUBNUB_demo.publish({
+                channel: 'start_game',
+                message: {
+                    "game_id": $routeParams.game_id,
+                    "players": $routeParams.players
+                }
+            });
+        }
+
+        $rootScope.PUBNUB_demo.subscribe({
+            channel: $routeParams.game_id,
+            callback: function(m) {
+                alert(m);
+                // $location.path('/');
+            },
+            connect: pub
+        });
+
+       
+
         console.log($routeParams.game_id);
         // socket.on('', function(data) {
         //     alert(data.game_id);
@@ -48,13 +70,17 @@ app.controller('MainCtrl', [
                         "width": 240,
                         "height": 160
                     },
-                    "rank": 0
+                    "easy": true,
+                    "medium": false,
+                    "hard": false
                 }, {
                     "id": 2005280218,
                     "term": "Pluto",
                     "definition": "Dog",
                     "image": "https://farm8.staticflickr.com/7054/6930602973_91256bf5fd_m.jpg",
-                    "rank": 1
+                    "easy": false,
+                    "medium": false,
+                    "hard": true
                 }]
             },
             "game_id": 1237287234848,
@@ -65,6 +91,11 @@ app.controller('MainCtrl', [
                 "id": 1234,
                 "name": "Revanth"
             }]
+        };
+
+        $scope.setDifficulty = function() {
+            console.log('made it');
+            return "";
         };
 
         $scope.questions = $scope.testInfo.quiz.terms;
@@ -134,14 +165,14 @@ app.controller('MainCtrl', [
             target.addClass('drop');
             console.log(target);
             if (target.context.children.length == 0) {
-                console.log('just the image');
+                //console.log('just the image');
                 target.parent().addClass('drop');
                 $timeout(function() {
                     target.parent().addClass('animated');
                     target.parent().addClass('zoomOut');
                 }, 300);
             } else {
-                console.log('WHOLE TOMATO');
+                //console.log('WHOLE TOMATO');
                 $timeout(function() {
                     target.addClass('animated');
                     target.addClass('zoomOut');

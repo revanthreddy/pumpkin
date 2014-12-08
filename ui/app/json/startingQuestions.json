@@ -12,13 +12,17 @@
                 "width": 240,
                 "height": 160
             },
-            "rank": 0
+            "easy": true,
+            "medium": false,
+            "hard": false
         }, {
             "id": 2005280218,
             "term": "Pluto",
             "definition": "Dog",
             "image": null,
-            "rank": 1
+            "easy": false,
+            "medium": false,
+            "hard": true 
         }]
     },
     "game_id": 1237287234848,

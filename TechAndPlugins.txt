@@ -40,3 +40,5 @@ https://github.com/Aleksey-Danchin/angular-randomize
 Angular Timer
 http://siddii.github.io/angular-timer/
 
+Flat UI Colors
+http://flatuicolors.com/
