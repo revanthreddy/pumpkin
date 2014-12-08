@@ -1,10 +1,6 @@
 #UI Components
 ###########################################
-node_modules
-#dist
-.tmp
-.sass-cache
-bower_components
+
 
 #Web Socket Compoents
 ###########################################
