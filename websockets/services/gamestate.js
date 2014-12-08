@@ -35,7 +35,8 @@ exports.newGameState = function (game) {
             console.log(record);
             if(!record)
                 reject(null);
-            resolve(record[0]);
+            else
+                resolve(record[0]);
 
         });
     });
@@ -83,7 +84,7 @@ function doesTheCurrentGameStateHasTheQuestion(gameId, term_id) {
         }
         var collection = db.collection('games');
 
-        collection.findOne({"_id": parseInt(gameId), "quiz.terms.id": term_id}, function (err, record) {
+        collection.findOne({"id": parseInt(gameId), "quiz.terms.id": term_id}, function (err, record) {
             if (err) {
                 console.log(err);
                 reject(err);

@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 var db;
-var server = "127.0.0.1";
+var server = "ec2-54-172-95-254.compute-1.amazonaws.com";
 
 exports.init = function(){
     console.log('Initialising DB ...');
