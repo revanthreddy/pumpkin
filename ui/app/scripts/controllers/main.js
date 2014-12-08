@@ -29,16 +29,17 @@ app.controller('MainCtrl', [
             $rootScope.PUBNUB_demo.publish({
                 channel: 'start_game',
                 message: {
-                    "game_id": $routeParams.game_id,
-                    "players": $routeParams.players
+                    "game_id": 43,
+                    "players": 1
                 }
             });
         }
 
         $rootScope.PUBNUB_demo.subscribe({
-            channel: $routeParams.game_id,
+            channel: 43+"-state",
             callback: function(m) {
-                alert(m);
+                console.log(m);
+                $scope.testInfo = m;
                 // $location.path('/');
             },
             connect: pub
@@ -46,7 +47,7 @@ app.controller('MainCtrl', [
 
        
 
-        console.log($routeParams.game_id);
+        //console.log($routeParams.game_id);
         // socket.on('', function(data) {
         //     alert(data.game_id);
         // });
@@ -55,7 +56,7 @@ app.controller('MainCtrl', [
 
         // LISTEN FOR GAME START FROM REVANTH
 
-        // HARDCODE
+        //// HARDCODE
         $scope.testInfo = {
             "_id": 1237287234848,
             "quiz": {
@@ -79,6 +80,14 @@ app.controller('MainCtrl', [
                     "definition": "Dog",
                     "image": "https://farm8.staticflickr.com/7054/6930602973_91256bf5fd_m.jpg",
                     "easy": false,
+                    "medium": true,
+                    "hard": false
+                }, {
+                    "id": 2005280217,
+                    "term": "Garfield",
+                    "definition": "Cat",
+                    "image": "https://farm8.staticflickr.com/7054/6930602973_91256bf5fd_m.jpg",
+                    "easy": false,
                     "medium": false,
                     "hard": true
                 }]
@@ -92,6 +101,8 @@ app.controller('MainCtrl', [
                 "name": "Revanth"
             }]
         };
+
+
 
         $scope.setDifficulty = function() {
             console.log('made it');
