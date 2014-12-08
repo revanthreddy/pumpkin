@@ -1,5 +1,5 @@
 defaults: &defaults
-  host: http://revanthreddy.koding.io
+  host: revanthreddy.koding.io
   port: 3000
   game_path: /games
   #host: localhost
