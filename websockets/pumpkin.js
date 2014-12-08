@@ -16,7 +16,7 @@ app.use(express.bodyParser());
 var gamestate = require('./services/gamestate');
 
 app.get('/', function (req, res) {
-    res.sendfile(__dirname + '/index_1.html');
+    res.sendfile(__dirname + '/index.html');
 });
 
 
@@ -29,11 +29,21 @@ app.get('/games', function (req, res) {
 
 io.sockets.on('connection', function (socket) {
     console.log("initialising socketio ..");
-    socket.emit('server', {"key" : 1});
+    
     
     socket.on('init', function (data) {
-        gamestate.testingFunction(data,socket);
+        
+        gamestate.testingFunction(data.game_id,socket);
     });
+    
+    socket.on('solve' , function(gameMove){
+       gamestate.gameMove(gameMove , socket);
+    });
+    
+    
+    
+    
+    
    
 });
 
@@ -45,8 +55,8 @@ app.post('/games', function (req, res) {
     var promise = gamestate.newGameState(game);
     if(!promise)
         return res.status(500).send("Internal server error");
-    promise.then(function (gameState) {
-        io.sockets.emit(game._id+"-init" , gameState);
+    promise.then(function (gameState) {   //broadcasting the game
+        io.sockets.emit(game.game_id+"-start" , gameState);
     } , function (error) {
         console.log(error);
         return res.status(400).send("Fail");

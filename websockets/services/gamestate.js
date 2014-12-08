@@ -73,7 +73,7 @@ function doesTheCurrentGameStateHasTheQuestion(gameId, term_id) {
         }
         var collection = db.collection('games');
 
-        collection.findOne({"_id": gameId, "set.terms.id": term_id}, function (err, record) {
+        collection.findOne({"_id": parseInt(gameId), "quiz.terms.id": term_id}, function (err, record) {
             if (err) {
                 console.log(err);
                 reject(err);
@@ -138,27 +138,25 @@ function deleteGame(gameId){
 }
 
 
-exports.gameMove = function (playerAnswer , io) {
+exports.gameMove = function (playerAnswer , socket) {
 
     var gameState = doesTheCurrentGameStateHasTheQuestion(playerAnswer.game_id, playerAnswer.term_id);
     var gameResponse = new Object();
     gameState.then(function (currentGameState) {
         if (currentGameState) {
-            var terms = currentGameState.set.terms;
+            var terms = currentGameState.quiz.terms;
             for (var i in terms) {
                 if (terms[i].id === playerAnswer.term_id) {
                     if (terms[i].definition === playerAnswer.definition) {  //correct answer
-                        console.log("correct answer");
                         terms.splice(i, 1);
                         
-                        console.log(terms);
                         var players = currentGameState.players;
                         for(var j in players){
                             if(players[j].id === playerAnswer.player_id){
                                 if(!players[j].score)
                                     players[j].score = 0;
                                 players[j].score = 1+ players[j].score ;
-                                var score = players[j].score;
+                                var score = players[j].score*playerAnswer.rank;
                                 var db = dbConnection.getDbConnection();
                                 if (!db) {
                                     console.error("Failed to initialize the db.");
@@ -179,9 +177,10 @@ exports.gameMove = function (playerAnswer , io) {
                                      **/
                                     
                                     console.log(gameResponse);
+                                    socket.emit(playerAnswer.game_id+"-state" , gameResponse);
                                     if(terms.size === 0 ){
                                         console.log("game finished");
-                                        io.sockets.emit(playerAnswer.game_id+"-complete", true);
+                                        socket.emit(playerAnswer.game_id+"-finish", true);
                                     }
                                 }
                                 else
@@ -220,6 +219,7 @@ exports.gameMove = function (playerAnswer , io) {
                                      * 
                                      **/
                                     console.log(gameResponse);
+                                    socket.emit(playerAnswer.game_id+"-state" , gameResponse);
                                 }
                                 else
                                 {}
