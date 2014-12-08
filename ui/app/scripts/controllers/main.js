@@ -16,46 +16,6 @@ app.controller('MainCtrl', [
             'Karma'
         ];
 
-        if ($rootScope.firstTime == true) {
-            $rootScope.firstTime = false;
-            $timeout(function() {
-                alert('you finished!');
-            }, 61000);
-        }
-
-
-        // GET GAME STATE FROM REVANTH
-        function pub() {
-            $rootScope.PUBNUB_demo.publish({
-                channel: 'start_game',
-                message: {
-                    "game_id": 43,
-                    "players": 1
-                }
-            });
-        }
-
-        $rootScope.PUBNUB_demo.subscribe({
-            channel: 43+"-state",
-            callback: function(m) {
-                console.log(m);
-                $scope.testInfo = m;
-                // $location.path('/');
-            },
-            connect: pub
-        });
-
-       
-
-        //console.log($routeParams.game_id);
-        // socket.on('', function(data) {
-        //     alert(data.game_id);
-        // });
-
-        // SEND EVENT DATA
-
-        // LISTEN FOR GAME START FROM REVANTH
-
         //// HARDCODE
         $scope.testInfo = {
             "_id": 1237287234848,
@@ -102,11 +62,66 @@ app.controller('MainCtrl', [
             }]
         };
 
+        if ($rootScope.firstTime) {
+            for (var i = 0; i < $scope.testInfo.quiz.terms.length; i++) {
+                $scope.definitions = [];
+                console.log('something');
+                $scope.definitions.push($scope.testInfo.quiz.terms[i].definition);
+                console.log($scope.testInfo.quiz.terms[i].definition);
+                //definitions.push($scope.testInfo.quiz.terms[i].definition);
+                //definitions[i] = $scope.testInfo.quiz.terms[i].definition;
+                //console.log($scope.testInfo.quiz.terms[i].definition);
+            }
+                console.log($scope.definitions);
+        }
+
+        if ($rootScope.firstTime == true) {
+            $rootScope.firstTime = false;
+            $timeout(function() {
+                alert('you finished!');
+            }, 61000);
+        }
 
 
-        $scope.setDifficulty = function() {
+        // GET GAME STATE FROM REVANTH
+        function pub() {
+            $rootScope.PUBNUB_demo.publish({
+                channel: 'start_game',
+                message: {
+                    "game_id": 43,
+                    "players": 1
+                }
+            });
+        }
+
+        $rootScope.PUBNUB_demo.subscribe({
+            channel: 43 + "-state",
+            callback: function(m) {
+                console.log(m);
+                $scope.testInfo = m;
+                // $location.path('/');
+            },
+            connect: pub
+        });
+
+
+
+        //console.log($routeParams.game_id);
+        // socket.on('', function(data) {
+        //     alert(data.game_id);
+        // });
+
+        // SEND EVENT DATA
+
+        // LISTEN FOR GAME START FROM REVANTH
+
+
+
+
+
+        $scope.shuffle = function(sourceArray) {
             console.log('made it');
-            return "";
+            return;
         };
 
         $scope.questions = $scope.testInfo.quiz.terms;
