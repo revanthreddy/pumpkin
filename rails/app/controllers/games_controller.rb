@@ -32,7 +32,7 @@ class GamesController < ApplicationController
         begin
           logger.info "#################################"
           
-          game_message = render_to_string "show", formats:[:json]
+          game_message = @game.make_json
           logger.info "[Game message] #{game_message}"
           
           req = Net::HTTP::Post.new(Rails.application.config.node_endpoints["game_path"],
@@ -57,9 +57,8 @@ class GamesController < ApplicationController
       return
     end
     
-    
-    respond_with(@game)    
-
+    render layout: "blank"
+    #respond_with(@game)    
   end
 
   def new
