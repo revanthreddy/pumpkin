@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <img src='./bower_components/material-design-icons/action/svg/design/ic_alarm_24px.svg'>
-                <timer countdown="61" interval="1000">{{countdown}}</timer>
+                <timer countdown="1" interval="1000" finish-callback="alert('worked');">{{countdown}}</timer>
             </div>
         </div>
         <div class="container">
@@ -33,7 +33,7 @@
                         <div class="col-lg-3" ng-repeat="question in questions" layout-align="start center">
                             <p data-droppable data-on-drop="main.onDrop" data-on-drag-enter="main.onDragEnter" data-on-drag-leave="main.onDragLeave" data-drop-id="{{question.id}}">
                                
-                                <img data-on-drag-enter="main.onDragEnter" src="{{question.image.url}}" style="border:5px solid black" width="100" height="100">
+                                <img src="{{question.image.url}}" style="border:5px solid black" width="100" height="100">
                                 <br/>
                                 {{question.term}}
 

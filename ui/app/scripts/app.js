@@ -19,4 +19,5 @@ app.config( function() {
 app.run(['$rootScope', '$location', '$http', function($rootScope, $location, $http) {
 $.material.init();
 $rootScope.socket = io.connect("http://revanthreddy.koding.io:3000/");
+$rootScope.firstTime = true;
 }]);

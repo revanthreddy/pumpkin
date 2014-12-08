@@ -8,13 +8,20 @@
  * Controller of the pumpkinApp
  */
 app.controller('MainCtrl', [
-    '$scope', '$http', '$timeout', '$routeParams',
-    function($scope, $http, $timeout, $routeParams) {
+    '$scope', '$http', '$timeout', '$routeParams', '$rootScope',
+    function($scope, $http, $timeout, $routeParams, $rootScope) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
             'Karma'
         ];
+
+        if ($rootScope.firstTime == true) {
+        	$rootScope.firstTime = false;
+            $timeout(function() {
+                alert('you finished!');
+            }, 1000);
+        }
 
         // GET GAME STATE FROM REVANTH
         console.log($routeParams.game_id);
