@@ -1,0 +1,10 @@
+
+<td>
+<p class="lead">
+<%= quiz.title %>
+</p>
+</td>
+<td>
+<%= link_to "", new_game_path(game: {quiz_id: quiz, num_players: 1}), {title: "1 Player Game", class: "btn btn-default btn-fab btn-raised mdi-social-person"}  %>
+<%= link_to "", new_game_path(game: {quiz_id: quiz, num_players: 2}), {title: "2 Player Game", class: "btn btn-default btn-fab btn-raised mdi-social-people"}  %>
+</td>

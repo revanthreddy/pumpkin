@@ -1,29 +1,19 @@
-<h1>Listing quizzes</h1>
 
-<table>
+<div class="jumbotron">
+    <h1>Quizzes</h1>
+    <p>Choose a Quiz and start playing with a friend!</p>
+</div>
+
+<table class="table table-striped table-hover ">
   <thead>
     <tr>
-      <th>Qid</th>
       <th>Title</th>
-      <th>Owner</th>
-      <th colspan="3"></th>
+      <th>Start Game</th>
     </tr>
   </thead>
-
   <tbody>
-    <% @quizzes.each do |quiz| %>
-      <tr>
-        <td><%= quiz.qid %></td>
-        <td><%= quiz.title %></td>
-        <td><%= quiz.owner_id %></td>
-        <td><%= link_to 'Show', quiz %></td>
-        <td><%= link_to 'Edit', edit_quiz_path(quiz) %></td>
-        <td><%= link_to 'Destroy', quiz, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+    <tr>
+      <%= render partial: "quiz", collection: @quizzes %>
+    </tr>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Quiz', new_quiz_path %>
