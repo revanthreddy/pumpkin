@@ -60,6 +60,17 @@ white-space: -moz-pre-wrap; /* Mozilla */
 word-wrap: break-word; /* IE 5+ */
 } 
 
+.vertical_divider:after {
+    background: #d3d3d3;
+    width: 1px;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -15px;
+}
+
 .container-narrow > hr {
   margin: 30px 0;
 }

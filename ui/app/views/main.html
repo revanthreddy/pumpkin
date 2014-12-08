@@ -23,7 +23,7 @@
             <div class="well">
 
                 <div class="row">
-                    <div class="col-lg-9">
+                    <div class="col-lg-9 vertical_divider">
                         <md-toolbar class="md-theme-light">
                             <h3 class="md-toolbar-tools">
                              <span>Questions</span>
@@ -33,12 +33,13 @@
                         <div class="col-lg-3" ng-repeat="question in questions" layout-align="start center">
                             <p data-droppable data-on-drop="main.onDrop" data-on-drag-enter="main.onDragEnter" data-on-drag-leave="main.onDragLeave" data-drop-id="{{question.id}}">
                                
-                                <img src="{{question.image.url}}" style="border:5px solid black" width="100" height="100">
+                                <img data-on-drag-enter="main.onDragEnter" src="{{question.image.url}}" style="border:5px solid black" width="100" height="100">
                                 <br/>
                                 {{question.term}}
 
                             </p>
                         </div>
+        
 
 
                     </div>

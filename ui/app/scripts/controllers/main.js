@@ -17,6 +17,7 @@ app.controller('MainCtrl', [
         ];
 
         // GET GAME STATE FROM REVANTH
+        console.log($routeParams.game_id);
         // socket.on('', function(data) {
         //     alert(data.game_id);
         // });
