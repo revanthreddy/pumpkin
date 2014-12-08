@@ -1,10 +1,10 @@
 defaults: &defaults
-  #host: http://revanthreddy.koding.io
-  #port: 3000
-  #game_path: /games
-  host: localhost
-  port: 8000
+  host: http://revanthreddy.koding.io
+  port: 3000
   game_path: /games
+  #host: localhost
+  #port: 8000
+  #game_path: /games
 
 development:
   <<: *defaults
