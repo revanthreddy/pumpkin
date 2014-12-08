@@ -1,0 +1,27 @@
+body {
+	background-color: grey;
+}
+
+.time { 
+	position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+	text-align: center;
+    margin: auto;
+}
+
+.currentTime {
+	font-size: 34pt;
+}
+
+.error {
+	color: red;
+}
+.small {
+	font-size: 10pt;
+}
+

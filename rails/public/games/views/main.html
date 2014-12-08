@@ -1,0 +1,88 @@
+<div ng-controller="MainCtrl as main">
+    <div class="jumbotron">
+        <!-- <h1>'Allo, 'Allo!</h1> -->
+        <p class="lead">
+            <!-- <img src="images/yeoman.png" alt="I'm Yeoman"> -->
+            <br> Drag the Answer to the Correct Question
+        </p>
+        <!--  <p class="animated fadeInLeft"><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a>
+        </p> -->
+
+
+
+        <!-- <md-button ng-click="timer-start()" class="md-raised">Start!</md-button> -->
+
+       
+        <div class="row">
+            <div class="col-lg-12">
+                <img src='./bower_components/material-design-icons/action/svg/design/ic_alarm_24px.svg'>
+                <timer countdown="61" interval="1000" finish-callback="alert('worked');">{{countdown}}</timer>
+            </div>
+        </div>
+        <div class="container">
+            <div class="well">
+
+                <div class="row">
+                    <div class="col-lg-9 vertical_divider">
+                        <md-toolbar class="md-theme-light">
+                            <h3 class="md-toolbar-tools">
+                             <span>Questions</span>
+                            </h3>
+                        </md-toolbar>
+                        <br>
+                        <div class="col-lg-3" ng-repeat="question in questions" layout-align="start center">
+                            <p data-droppable data-on-drop="main.onDrop" data-on-drag-enter="main.onDragEnter" data-on-drag-leave="main.onDragLeave" data-drop-id="{{question.id}}">
+                                <span class="{{question.rank}}" style="position: absolute; left: 0px; top:0px;"><a href="javascript:void(0)" ng-class="{'btn':true , 'btn-success':true, 'btn-fab':true, 'btn-raised':true, 'mdi-action-grade':true, 'btn-success':{{question.easy}}, 'btn-warning':{{question.medium}}, 'btn-danger':{{question.hard}}}"></a></span>
+                                <img src="{{question.image.url}}" style="border:5px solid black" width="100" height="100">
+                                <br/>
+                                {{question.term}}
+
+                            </p>
+                        </div>
+        
+
+
+                    </div>
+                    <div class="col-lg-3">
+                        <md-toolbar class="md-theme-light">
+                            <h3 class="md-toolbar-tools">
+                             <span>Answers</span>
+                            </h3>
+                        </md-toolbar>
+                        <md-content>
+                            <md-list>
+                                <md-item ng-repeat="question in questions">
+                                    <md-item-content>
+                                        <div class="md-tile-content wordwrap animated fadeInDown" draggable="true" data-drop-on="[{{question.id}}]" >{{question.definition}}</div>
+                                    </md-item-content>
+                                    <md-divider ng-if="!$last"></md-divider>
+                                </md-item>
+                            </md-list>
+                        </md-content>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row">
+                <div class="col-lg-12">
+                    <div>
+                            Status: {{main.status}}
+                        </div>
+                    <div class="list-group">
+                        <div class="list-group-item" data-ng-repeat="person in main.persons" data-draggable="person" data-on-drag-start="main.onDragStart">
+                            <div class="badge">{{person.job}}</div>
+                            <span>{{person.name}}</span>
+                        </div>
+                    </div>
+
+                    <div class="list-group">
+                        <div class="list-group-item" data-ng-repeat="animal in main.animals" data-draggable="animal" data-on-drag-start="main.onDragStart" data-drop-on="['droppable2', 123]">
+                            <div class="badge">{{animal.type}}</div>
+                            <span>{{animal.name}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

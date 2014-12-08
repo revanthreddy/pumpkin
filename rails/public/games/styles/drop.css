@@ -1,0 +1,44 @@
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}
+
+[data-droppable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+  
+  font-weight: bold;
+  height: 250px;
+  border: 1px dashed #999;
+  text-align: center;
+  padding-top: 80px;
+  transition : border 500ms ease-out; 
+  -webkit-transition : border 500ms ease-out; 
+  -moz-transition : border 500ms ease-out;
+  -o-transition : border 500ms ease-out;   
+}
+
+
+/* RED - HOVERING */
+[data-droppable].over {
+  background-color: #fcd;
+  border: 5px dashed #999;
+}
+
+
+/* GREEN - CORRECT */
+[data-droppable].drop {
+  background-color: #cfd;
+  border-width: 5px;
+  border-color: #4e3;
+}

@@ -1,0 +1,36 @@
+{
+    "_id": 1237287234848,
+    "quiz": {
+        "id": 1234,
+        "title": "Disney Animals and Owners",
+        "terms": [{
+            "id": 2005281693,
+            "term": "Abu",
+            "definition": "Monkey",
+            "image": {
+                "url": "https://farm8.staticflickr.com/7054/6930602973_91256bf5fd_m.jpg",
+                "width": 240,
+                "height": 160
+            },
+            "easy": true,
+            "medium": false,
+            "hard": false
+        }, {
+            "id": 2005280218,
+            "term": "Pluto",
+            "definition": "Dog",
+            "image": null,
+            "easy": false,
+            "medium": false,
+            "hard": true 
+        }]
+    },
+    "game_id": 1237287234848,
+    "players": [{
+        "id": 1234,
+        "name": "Milan"
+    }, {
+        "id": 1234,
+        "name": "Revanth"
+    }]
+}
