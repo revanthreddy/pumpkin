@@ -8,14 +8,22 @@
  * Controller of the pumpkinApp
  */
 app.controller('MainCtrl', [
-    '$scope', '$http', '$timeout',
-    function($scope, $http, $timeout) {
+    '$scope', '$http', '$timeout', '$routeParams',
+    function($scope, $http, $timeout, $routeParams) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
             'Karma'
         ];
 
+        // GET GAME STATE FROM REVANTH
+        // socket.on('', function(data) {
+        //     alert(data.game_id);
+        // });
+
+        // SEND EVENT DATA
+
+        // LISTEN FOR GAME START FROM REVANTH
 
         // HARDCODE
         $scope.testInfo = {
@@ -52,7 +60,7 @@ app.controller('MainCtrl', [
         };
 
         $scope.questions = $scope.testInfo.quiz.terms;
-        console.log($scope.questions);
+        //console.log($scope.questions);
         // HARDCODE
 
         this.name = 'Angularjs Drag&Drop';
