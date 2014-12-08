@@ -15,6 +15,7 @@ app.controller('MainCtrl', [
             'AngularJS',
             'Karma'
         ];
+        $scope.definitions = [];
 
         //// HARDCODE
         $scope.testInfo = {
@@ -64,13 +65,12 @@ app.controller('MainCtrl', [
 
         if ($rootScope.firstTime) {
             for (var i = 0; i < $scope.testInfo.quiz.terms.length; i++) {
-                $scope.definitions = [];
+                
                 console.log('something');
+                console.log($scope.definitions);
+                       
                 $scope.definitions.push($scope.testInfo.quiz.terms[i].definition);
-                console.log($scope.testInfo.quiz.terms[i].definition);
-                //definitions.push($scope.testInfo.quiz.terms[i].definition);
-                //definitions[i] = $scope.testInfo.quiz.terms[i].definition;
-                //console.log($scope.testInfo.quiz.terms[i].definition);
+
             }
                 console.log($scope.definitions);
         }
