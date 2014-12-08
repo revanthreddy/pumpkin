@@ -116,10 +116,26 @@ app.controller('MainCtrl', [
             target.removeClass('over');
             console.log("this is where the magic happens");
             target.addClass('drop');
-            $timeout(function() {
-                target.addClass('animated');
-                target.addClass('zoomOut');
-            }, 300);
+            console.log(target);
+            if (target.context.children.length == 0) {
+                console.log('just the image');
+                target.parent().addClass('drop');
+                $timeout(function() {
+                    target.parent().addClass('animated');
+                    target.parent().addClass('zoomOut');
+                }, 300);
+            } else {
+                console.log('WHOLE TOMATO');
+                $timeout(function() {
+                    target.addClass('animated');
+                    target.addClass('zoomOut');
+                }, 300);
+
+            }
+            // $timeout(function() {
+            //     target.addClass('animated');
+            //     target.addClass('zoomOut');
+            // }, 300);
 
             //target.detach();
         });
