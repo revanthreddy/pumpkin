@@ -52,7 +52,7 @@
                             <md-list>
                                 <md-item ng-repeat="question in questions">
                                     <md-item-content>
-                                        <div class="md-tile-content wordwrap animated fadeInDown" draggable="true" data-drop-on="{{question.id}}" >{{question.definition}}</div>
+                                        <div class="md-tile-content wordwrap animated fadeInDown" draggable="true" data-drop-on="[{{question.id}}]" >{{question.definition}}</div>
                                     </md-item-content>
                                     <md-divider ng-if="!$last"></md-divider>
                                 </md-item>

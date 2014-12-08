@@ -57,16 +57,16 @@ app.controller('MainCtrl', [
 
         this.name = 'Angularjs Drag&Drop';
 
-        this.persons = [{
-            name: 'Ciul',
-            job: 'developer'
-        }, {
-            name: 'Jose',
-            job: 'designer'
-        }, {
-            name: 'Carlos',
-            job: 'sales'
-        }];
+        // this.persons = [{
+        //     name: 'Ciul',
+        //     job: 'developer'
+        // }, {
+        //     name: 'Jose',
+        //     job: 'designer'
+        // }, {
+        //     name: 'Carlos',
+        //     job: 'sales'
+        // }];
 
         this.animals = [{
             name: 'Hercules',
