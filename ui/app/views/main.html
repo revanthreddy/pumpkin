@@ -32,7 +32,7 @@
                         <br>
                         <div class="col-lg-3" ng-repeat="question in questions" layout-align="start center">
                             <p data-droppable data-on-drop="main.onDrop" data-on-drag-enter="main.onDragEnter" data-on-drag-leave="main.onDragLeave" data-drop-id="{{question.id}}">
-                                <span class="{{question.rank}}" style="position: absolute; left: 0px; top:0px;"><a href="javascript:void(0)" ng-class="{'btn':true , 'btn-success':true, 'btn-fab':true, 'btn-raised':true, 'mdi-action-grade':true, 'btn-success':{{question.easy}}, 'btn-warning':{{question.medium}}, 'btn-error':{{question.hard}}}"></a></span>
+                                <span class="{{question.rank}}" style="position: absolute; left: 0px; top:0px;"><a href="javascript:void(0)" ng-class="{'btn':true , 'btn-success':true, 'btn-fab':true, 'btn-raised':true, 'mdi-action-grade':true, 'btn-success':{{question.easy}}, 'btn-warning':{{question.medium}}, 'btn-danger':{{question.hard}}}"></a></span>
                                 <img src="{{question.image.url}}" style="border:5px solid black" width="100" height="100">
                                 <br/>
                                 {{question.term}}
