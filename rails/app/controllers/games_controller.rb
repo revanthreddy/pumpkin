@@ -15,6 +15,10 @@ class GamesController < ApplicationController
     #if less than player_num then create score for this user else render failure
     #if game now has enough players send message to node to start game
     #may god be with you
+    if params[:num_players].blank?
+      redirect_to game_path(@game, num_players: @game.num_players)
+      return
+    end
     
     if @game.users.count < @game.num_players
       Score.create({
@@ -26,19 +30,26 @@ class GamesController < ApplicationController
       
       if @game.users.count == @game.num_players
         begin
+          logger.info "#################################"
+          
+          game_message = render_to_string "show", formats:[:json]
+          logger.info "[Game message] #{game_message}"
+          
           req = Net::HTTP::Post.new(Rails.application.config.node_endpoints["game_path"],
                                         initheader = {'Content-Type' =>'application/json'})
-          req.body = render_to_string "show", formats:[:json]
+          req.body = game_message
           res = Net::HTTP.new(Rails.application.config.node_endpoints["host"],
                               Rails.application.config.node_endpoints["port"]).start { |http|
                                 http.request(req)
                               }
-          puts "Response #{res.code} #{res.message}: #{res.body}"
+          logger.info "[Response] #{res.code} #{res.message}: #{res.body}"
         rescue Exception => msg  
           # display the system generated error message  
-          puts msg  
+          logger.info "[ERROR] #{msg}"
+        ensure
+          logger.info "#################################"
         end
-          
+        
       end
       
     else
@@ -55,7 +66,7 @@ class GamesController < ApplicationController
     @game = Game.new(game_params)
     
     @game.save
-    redirect_to(@game)
+    redirect_to game_path(@game, num_players: @game.num_players)
   end
 
   def edit

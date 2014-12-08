@@ -16,6 +16,7 @@ json.quiz do
     end
     json.rank t.rank + 1
   end
-  json.game_id @game.id
-  json.players @game.users, :id, :name
 end
+
+json.game_id @game.id
+json.players @game.users, :id, :name

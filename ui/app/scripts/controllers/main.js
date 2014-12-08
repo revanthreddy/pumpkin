@@ -16,24 +16,7 @@ app.controller('MainCtrl', [
             'Karma'
         ];
 
-        if ($rootScope.firstTime == true) {
-        	$rootScope.firstTime = false;
-            $timeout(function() {
-                alert('you finished!');
-            }, 61000);
-        }
-
-        // GET GAME STATE FROM REVANTH
-        console.log($routeParams.game_id);
-        // socket.on('', function(data) {
-        //     alert(data.game_id);
-        // });
-
-        // SEND EVENT DATA
-
-        // LISTEN FOR GAME START FROM REVANTH
-
-        // HARDCODE
+        //// HARDCODE
         $scope.testInfo = {
             "_id": 1237287234848,
             "quiz": {
@@ -48,13 +31,25 @@ app.controller('MainCtrl', [
                         "width": 240,
                         "height": 160
                     },
-                    "rank": 0
+                    "easy": true,
+                    "medium": false,
+                    "hard": false
                 }, {
                     "id": 2005280218,
                     "term": "Pluto",
                     "definition": "Dog",
                     "image": "https://farm8.staticflickr.com/7054/6930602973_91256bf5fd_m.jpg",
-                    "rank": 1
+                    "easy": false,
+                    "medium": true,
+                    "hard": false
+                }, {
+                    "id": 2005280217,
+                    "term": "Garfield",
+                    "definition": "Cat",
+                    "image": "https://farm8.staticflickr.com/7054/6930602973_91256bf5fd_m.jpg",
+                    "easy": false,
+                    "medium": false,
+                    "hard": true
                 }]
             },
             "game_id": 1237287234848,
@@ -65,6 +60,68 @@ app.controller('MainCtrl', [
                 "id": 1234,
                 "name": "Revanth"
             }]
+        };
+
+        if ($rootScope.firstTime) {
+            for (var i = 0; i < $scope.testInfo.quiz.terms.length; i++) {
+                $scope.definitions = [];
+                console.log('something');
+                $scope.definitions.push($scope.testInfo.quiz.terms[i].definition);
+                console.log($scope.testInfo.quiz.terms[i].definition);
+                //definitions.push($scope.testInfo.quiz.terms[i].definition);
+                //definitions[i] = $scope.testInfo.quiz.terms[i].definition;
+                //console.log($scope.testInfo.quiz.terms[i].definition);
+            }
+                console.log($scope.definitions);
+        }
+
+        if ($rootScope.firstTime == true) {
+            $rootScope.firstTime = false;
+            $timeout(function() {
+                alert('you finished!');
+            }, 61000);
+        }
+
+
+        // GET GAME STATE FROM REVANTH
+        function pub() {
+            $rootScope.PUBNUB_demo.publish({
+                channel: 'start_game',
+                message: {
+                    "game_id": 43,
+                    "players": 1
+                }
+            });
+        }
+
+        $rootScope.PUBNUB_demo.subscribe({
+            channel: 43 + "-state",
+            callback: function(m) {
+                console.log(m);
+                $scope.testInfo = m;
+                // $location.path('/');
+            },
+            connect: pub
+        });
+
+
+
+        //console.log($routeParams.game_id);
+        // socket.on('', function(data) {
+        //     alert(data.game_id);
+        // });
+
+        // SEND EVENT DATA
+
+        // LISTEN FOR GAME START FROM REVANTH
+
+
+
+
+
+        $scope.shuffle = function(sourceArray) {
+            console.log('made it');
+            return;
         };
 
         $scope.questions = $scope.testInfo.quiz.terms;
@@ -134,14 +191,14 @@ app.controller('MainCtrl', [
             target.addClass('drop');
             console.log(target);
             if (target.context.children.length == 0) {
-                console.log('just the image');
+                //console.log('just the image');
                 target.parent().addClass('drop');
                 $timeout(function() {
                     target.parent().addClass('animated');
                     target.parent().addClass('zoomOut');
                 }, 300);
             } else {
-                console.log('WHOLE TOMATO');
+                //console.log('WHOLE TOMATO');
                 $timeout(function() {
                     target.addClass('animated');
                     target.addClass('zoomOut');
