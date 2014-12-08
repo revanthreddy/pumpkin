@@ -1,0 +1,42 @@
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  
+  var socket = io.connect('http://localhost:3000' ,{ query : "game_id=123456&players=2" });
+  
+  
+  
+  
+  socket.on('123456-state' , function(data){
+      console.log(data);
+      alert(data);
+      
+  });
+  
+  
+ 
+</script>
+
+<!--<script>
+  var pubnub_setup = {
+    channel       : 'pumpkin',
+    publish_key   : "pub-c-36c7caed-38c0-4cfc-b283-1e63c8169d1f",
+    subscribe_key : "sub-c-796bc1de-7e48-11e4-baaa-02ee2ddab7fe"
+};
+
+  var socket = io.connect('http://pubsub.pubnub.com');
+  socket.on( 'news', function (data) {
+    console.log(data);
+  } );
+  
+</script>-->
+
+<h1>sockets activity</h1>
+<button onclick="clicker();">click here</button>
+<div id="data">
+    
+</div>
+

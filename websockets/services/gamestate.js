@@ -1,7 +1,12 @@
 var dbConnection = require('../services/connector');
 var Promise = require('promise');
 
-
+var pubnub = require("pubnub")({
+    ssl           : true,  // <- enable TLS Tunneling over TCP
+    publish_key   : "pub-c-36c7caed-38c0-4cfc-b283-1e63c8169d1f",
+    subscribe_key : "sub-c-796bc1de-7e48-11e4-baaa-02ee2ddab7fe",
+    secret_key    : 'sec-c-ZWZiYWFmMzQtNTM3OC00MzY3LWI4ZGYtNzcyNjY4YjI0MDkx'
+});
 
 exports.testingFunction = function(data,socket){
     socket.emit("server-response",data);
@@ -28,7 +33,9 @@ exports.newGameState = function (game) {
                 reject(err);
             }
             console.log(record);
-            resolve(record);
+            if(!record)
+                reject(null);
+            resolve(record[0]);
 
         });
     });
@@ -54,7 +61,10 @@ exports.getCurrentGameState = function (gameId) {
                 console.log(err);
                 reject(err);
             }
+            
             console.log("record : "+record);
+            if(!record)
+                reject(null);
             resolve(record);
 
         });
@@ -138,7 +148,7 @@ function deleteGame(gameId){
 }
 
 
-exports.gameMove = function (playerAnswer , socket) {
+exports.gameMove = function (playerAnswer ) {
 
     var gameState = doesTheCurrentGameStateHasTheQuestion(playerAnswer.game_id, playerAnswer.term_id);
     var gameResponse = new Object();
@@ -178,9 +188,21 @@ exports.gameMove = function (playerAnswer , socket) {
                                     
                                     console.log(gameResponse);
                                     socket.emit(playerAnswer.game_id+"-state" , gameResponse);
+                                    pubnub.publish({ 
+                                            channel   : playerAnswer.game_id+'-state',
+                                            message   : gameResponse,
+                                            callback  : function(e) { connections[gameConnection.game_id] =null; },
+                                            error     : function(e) { console.log( "FAILED! RETRY PUBLISH!", e ); }
+                                        });
+                                        
                                     if(terms.size === 0 ){
                                         console.log("game finished");
-                                        socket.emit(playerAnswer.game_id+"-finish", true);
+                                        pubnub.publish({ 
+                                            channel   : playerAnswer.game_id+'-finish',
+                                            message   : true,
+                                            callback  : function(e) { connections[gameConnection.game_id] =null; },
+                                            error     : function(e) { console.log( "FAILED! RETRY PUBLISH!", e ); }
+                                        });
                                     }
                                 }
                                 else
@@ -219,7 +241,13 @@ exports.gameMove = function (playerAnswer , socket) {
                                      * 
                                      **/
                                     console.log(gameResponse);
-                                    socket.emit(playerAnswer.game_id+"-state" , gameResponse);
+                                    
+                                    pubnub.publish({ 
+                                            channel   : playerAnswer.game_id+'-state',
+                                            message   : gameResponse,
+                                            callback  : function(e) { connections[gameConnection.game_id] =null; },
+                                            error     : function(e) { console.log( "FAILED! RETRY PUBLISH!", e ); }
+                                        });
                                 }
                                 else
                                 {}
