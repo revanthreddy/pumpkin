@@ -1,0 +1,49 @@
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  $(document).ready(function () {
+      console.log("running");
+   var PUBNUB_demo = PUBNUB.init({
+          publish_key: 'pub-c-36c7caed-38c0-4cfc-b283-1e63c8169d1f',
+    subscribe_key: 'sub-c-796bc1de-7e48-11e4-baaa-02ee2ddab7fe'
+        });
+        
+     function pub(){   
+     PUBNUB_demo.publish({
+               channel: 'start_game',        
+               message: {"game_id" : 123456 , "players" : 2}
+    });
+     }
+          
+    PUBNUB_demo.subscribe({
+          channel: '123456-state',
+          callback: function(m){
+                        alert(m);
+        },
+        connect : pub
+    });
+    
+    PUBNUB_demo.subscribe({
+          channel: '123456-state-12',
+          callback: function(m){
+                        alert(m);
+        }
+    });
+        
+  });
+  
+ 
+</script>
+
+
+
+<h1>sockets activity</h1>
+<button onclick="clicker();">click here</button>
+<div id="data">
+    
+</div>
+

@@ -3,7 +3,7 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
-
+var connections= {};
 
 
 var dbConnection = require('./services/connector');
@@ -16,38 +16,13 @@ app.use(express.bodyParser());
 var gamestate = require('./services/gamestate');
 
 app.get('/', function (req, res) {
-    res.sendfile(__dirname + '/index.html');
+    res.sendfile(__dirname + '/index_3.html');
 });
 
 
-app.get('/games', function (req, res) {
-    
-    return res.status(200).send(gamestate.getCurrentGameState(1234));
-});
-
-
-
-io.sockets.on('connection', function (socket) {
-    console.log("initialising socketio ..");
-    
-    
-    socket.on('init', function (data) {
-        
-        gamestate.testingFunction(data.game_id,socket);
-    });
-    
-    socket.on('solve' , function(gameMove){
-       gamestate.gameMove(gameMove , socket);
-    });
-    
-    
-    
-    
-    
-   
-});
 
 app.post('/games', function (req, res) {
+    
     var game = req.body;
     if(!game)
         return;
@@ -56,7 +31,21 @@ app.post('/games', function (req, res) {
     if(!promise)
         return res.status(500).send("Internal server error");
     promise.then(function (gameState) {   //broadcasting the game
-        io.sockets.emit(game.game_id+"-start" , gameState);
+        
+        
+        if(connections[gameState.game_id]){
+            if(connections[parseInt(gameState.game_id)] === gameState.players.length){
+                console.log(connections[parseInt(gameState.game_id)]);
+                pubnub.publish({ 
+                    channel   : gameState.game_id+'-state',
+                    message   : gameState,
+                    callback  : function(e) { console.log( "SUCCESS!", e ); },
+                    error     : function(e) { console.log( "FAILED! RETRY PUBLISH!", e ); }
+                });
+                connections[gameState.game_id] =null;
+            }
+        }
+
     } , function (error) {
         console.log(error);
         return res.status(400).send("Fail");
@@ -80,6 +69,49 @@ app.get('/games/:id', function (req, res) {
 
 
 
+
+io.sockets.on('connection', function (socket) {
+    console.log("initialising socketio ..");
+    console.log("query... " + socket.manager.handshaken[socket.id].query.players);
+    
+    
+    
+//    var gameConnection = new Object();
+//    gameConnection.game_id = socket.manager.handshaken[socket.id].query.game_id;
+//    gameConnection.players = socket.manager.handshaken[socket.id].query.players;
+//    
+//    if(!connections[gameConnection.game_id])
+//        connections[gameConnection.game_id] = 1;
+//    else
+//        connections[gameConnection.game_id] = connections[gameConnection.game_id] + 1;
+//    
+//    if(connections[gameConnection.game_id] == gameConnection.players){
+//        var promise = gamestate.getCurrentGameState(gameConnection.game_id);
+//        if(!promise)
+//            return;
+//        promise.then(function (gameState) {   //broadcasting the game
+//            io.sockets.emit(gameState.game_id+'-state' , gameState);
+//            connections[gameConnection.game_id]=null;
+//        } , function (error) {
+//            console.log(error);
+//            return;
+//        });
+//    }
+    
+    socket.on('init', function (data) {
+        
+        gamestate.testingFunction(data.game_id,socket);
+    });
+    
+    socket.on('solve' , function(gameMove){
+       gamestate.gameMove(gameMove , socket);
+    });
+    
+    
+});
+
+
+
 /*
  * 
  * 
@@ -97,30 +129,42 @@ var pubnub = require("pubnub")({
 
 
 pubnub.subscribe({
-    channel  : "my_response",
-    callback : function(message) {
-        console.log(message);
-        pubnub.publish({ 
-            channel   : 'from_server_again',
-            message   : {"color" : "greeen"},
-            callback  : function(e) { console.log( "SUCCESS!", e ); },
-            error     : function(e) { console.log( "FAILED! RETRY PUBLISH!", e ); }
-        });
+    channel  : "start_game",
+    callback : function(gameConnection) {
+        
+        console.log(gameConnection);
+        
+        if (!connections[gameConnection.game_id])
+            connections[gameConnection.game_id] = 1;
+        else
+            connections[gameConnection.game_id] = connections[gameConnection.game_id] + 1;
+
+        if (connections[gameConnection.game_id] == gameConnection.players) {
+            var promise = gamestate.getCurrentGameState(gameConnection.game_id);
+            if (!promise)
+                return;
+            promise.then(function (gameState) {   //broadcasting the game
+                pubnub.publish({ 
+                    channel   : gameState.game_id+'-state',
+                    message   : gameState,
+                    callback  : function(e) { connections[gameConnection.game_id] =null; },
+                    error     : function(e) { console.log( "FAILED! RETRY PUBLISH!", e ); }
+                });
+                
+                
+                
+            }, function (error) {
+                console.log(error);
+                return;
+            });
+        }
+        
+        
+        
+        
+        
     }
 });
-
-
-
-app.get('/pubnub', function (req, res) {
-    pubnub.publish({ 
-            channel   : 'from_server',
-            message   : {"color" : "greeen"},
-            callback  : function(e) { console.log( "SUCCESS!", e ); },
-            error     : function(e) { console.log( "FAILED! RETRY PUBLISH!", e ); }
-        });
-    return res.status(200).send("pubnub received");
-});
-
 
 
 

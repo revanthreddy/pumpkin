@@ -5,7 +5,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   
-  var socket = io.connect('http://localhost:3000');
+  var socket = io.connect('http://localhost:3000' ,{ query : "game_id=1234&players=2" });
   
   socket.on('server' , function(data){
       $("#data").append(data +"<br>");

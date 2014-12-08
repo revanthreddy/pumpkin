@@ -28,7 +28,9 @@ exports.newGameState = function (game) {
                 reject(err);
             }
             console.log(record);
-            resolve(record);
+            if(!record)
+                reject(null);
+            resolve(record[0]);
 
         });
     });
@@ -54,7 +56,10 @@ exports.getCurrentGameState = function (gameId) {
                 console.log(err);
                 reject(err);
             }
+            
             console.log("record : "+record);
+            if(!record)
+                reject(null);
             resolve(record);
 
         });
