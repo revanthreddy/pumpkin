@@ -8,17 +8,17 @@
  * Controller of the pumpkinApp
  */
 app.controller('MainCtrl', [
-    '$scope', '$http',
-    function($scope, $http) {
+    '$scope', '$http', '$timeout',
+    function($scope, $http, $timeout) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
             'Karma'
         ];
- 		
-        
- 		// HARDCODE
-       	$scope.testInfo = {
+
+
+        // HARDCODE
+        $scope.testInfo = {
             "_id": 1237287234848,
             "quiz": {
                 "id": 1234,
@@ -114,7 +114,14 @@ app.controller('MainCtrl', [
             this.dropped = data;
             var target = angular.element(ev.target);
             target.removeClass('over');
+            console.log("this is where the magic happens");
             target.addClass('drop');
+            $timeout(function() {
+                target.addClass('animated');
+                target.addClass('zoomOut');
+            }, 300);
+
+            //target.detach();
         });
     }
 ]);
